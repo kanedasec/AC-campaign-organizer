@@ -8,7 +8,7 @@
 
 <hr>
 
-<h3>Mapas</h3>
+<h2>Mapas</h2>
 {% for m in campaign.maps %}
 <div class="card">
     <strong>{{ m.nome }}</strong>
@@ -23,10 +23,10 @@
 
 <hr>
 
-<h3>Guildas</h3>
+<h2>Guildas</h2>
 {% for g in campaign.guilds %}
   <div class="card">
-    <h4>{{ g.nome }}</h4>
+    <h3>{{ g.nome }}</h3>
     <ul>
         {% for h in g.heroes %}
             <li><strong>{{ h.nome }}</strong></li>

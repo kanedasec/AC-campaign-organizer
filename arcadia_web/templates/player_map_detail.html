@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Mapa: {{ mapa.nome }}</h2>
+<h1>Mapa: {{ mapa.nome }}</h1>
 
-<h3>Status dos Heróis</h3>
+<h2>Status dos Heróis</h2>
 {% for g in mapa.campaign.guilds %}
   <h4>{{ g.nome }}</h4>
   <ul>

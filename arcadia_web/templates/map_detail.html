@@ -2,7 +2,7 @@
 {% block content %}
 <h2>Mapa: {{ mapa.nome }}</h2>
 
-<h3>Death Tokens dos Heróis</h3>
+<h2>Death Tokens dos Heróis</h2>
 <form method="post" action="/admin/map/{{ mapa.id }}/update_tokens">
   {% for g in mapa.campaign.guilds %}
     <h4>{{ g.nome }}</h4>

@@ -3,14 +3,14 @@
 <h2>Campanha: {{ campaign.nome }}</h2>
 
 <!-- Criar guilda manualmente -->
-<h3>Adicionar Guilda</h3>
+<h4>Adicionar Guilda</h4>
 <form method="post" action="/admin/campaign/{{ campaign.id }}/add_guild">
   <input type="text" name="nome" placeholder="Nome da Guilda" required>
   <button type="submit">Criar Guilda</button>
 </form>
 
 <!-- Criar mapa manualmente -->
-<h3>Adicionar Mapa</h3>
+<h4>Adicionar Mapa</h4>
 <form method="post" action="/admin/campaign/{{ campaign.id }}/add_map">
   <input type="text" name="nome" placeholder="Nome do Mapa" required>
   <button type="submit">Criar Mapa</button>
@@ -18,7 +18,7 @@
 
 <hr>
 
-<h3>Mapas</h3>
+<h4>Mapas</h4>
 {% for m in campaign.maps %}
 <div class="card">
   <strong>{{ m.nome }}</strong><br>
