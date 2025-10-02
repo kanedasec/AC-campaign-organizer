@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Campanha: {{ campaign.nome }}</h2>
+
+<a href="/player/campaign/{{ campaign.id }}/timeline">
+  <button>Ver Linha do Tempo</button>
+</a>
+
+<hr>
+
+<h3>Mapas</h3>
+{% for m in campaign.maps %}
+<div class="card">
+    <strong>{{ m.nome }}</strong>
+    <br>
+    <a href="/player/map/{{ m.id }}">
+        <button>Ver Death Tokens & Curses</button>
+    </a>
+</div>
+{% else %}
+<p>Nenhum mapa cadastrado.</p>
+{% endfor %}
+
+<hr>
+
+<h3>Guildas</h3>
+{% for g in campaign.guilds %}
+  <div class="card">
+    <h4>{{ g.nome }}</h4>
+    <ul>
+        {% for h in g.heroes %}
+            <li><strong>{{ h.nome }}</strong></li>
+        {% else %}
+            <li>Nenhum herói adicionado.</li>
+        {% endfor %}
+    </ul>
+  </div>
+{% else %}
+<p>Nenhuma guilda cadastrada.</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mapa: {{ mapa.nome }}</h2>
+
+<h3>Death Tokens dos Heróis</h3>
+<form method="post" action="/admin/map/{{ mapa.id }}/update_tokens">
+  {% for g in mapa.campaign.guilds %}
+    <h4>{{ g.nome }}</h4>
+    <ul>
+      {% for h in g.heroes %}
+        {% set hs = h.maps|selectattr("map_id", "equalto", mapa.id)|first %}
+        <li>
+          {{ h.nome }}:
+          <input type="number" name="hero_{{ h.id }}" value="{{ hs.death_tokens if hs else 0 }}" min="0">
+          {% if hs and hs.curse_nome %}
+            → Curse: <strong>{{ hs.curse_nome }}</strong> ({{ hs.curse_efeito }})
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+  <button type="submit">Salvar Tokens</button>
+</form>
+
+<form method="post" action="/admin/map/{{ mapa.id }}/apply_curses">
+  <button type="submit">Aplicar Death Curses</button>
+</form>
+{% endblock %}

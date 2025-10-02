@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Campanha: {{ campaign.nome }}</h2>
+
+<!-- Criar guilda manualmente -->
+<h3>Adicionar Guilda</h3>
+<form method="post" action="/admin/campaign/{{ campaign.id }}/add_guild">
+  <input type="text" name="nome" placeholder="Nome da Guilda" required>
+  <button type="submit">Criar Guilda</button>
+</form>
+
+<!-- Criar mapa manualmente -->
+<h3>Adicionar Mapa</h3>
+<form method="post" action="/admin/campaign/{{ campaign.id }}/add_map">
+  <input type="text" name="nome" placeholder="Nome do Mapa" required>
+  <button type="submit">Criar Mapa</button>
+</form>
+
+<hr>
+
+<h3>Mapas</h3>
+{% for m in campaign.maps %}
+<div class="card">
+  <strong>{{ m.nome }}</strong><br>
+  <form method="post" action="/admin/map/{{ m.id }}/set_winner">
+    <label>Guilda vencedora:</label>
+    <select name="guilda_vencedora">
+      <option value="" {% if not m.guilda_vencedora %}selected{% endif %}>-- sem vencedora --</option>
+      {% for g in campaign.guilds %}
+        <option value="{{ g.nome }}" {% if m.guilda_vencedora == g.nome %}selected{% endif %}>{{ g.nome }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Salvar</button>
+  </form>
+
+  <!-- 🔹 Botão para gerenciar tokens/curses -->
+  <a href="/admin/map/{{ m.id }}">
+    <button>Gerenciar Death Tokens & Curses</button>
+  </a>
+</div>
+{% else %}
+<p>Nenhum mapa cadastrado.</p>
+{% endfor %}
+
+<hr>
+
+<h3>Guildas</h3>
+{% for g in campaign.guilds %}
+  <div class="card">
+    <h4>{{ g.nome }}</h4>
+    <ul>
+        {% for h in g.heroes %}
+            <li>
+                <strong>{{ h.nome }}</strong> | DEF: {{ h.defesa }} | VIDA: {{ h.vida }} | Habilidade: {{ h.habilidade }}
+            </li>
+        {% else %}
+            <li>Nenhum herói adicionado.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Adicionar herói à guilda -->
+    <form method="post" action="/admin/guild/{{ g.id }}/add_hero">
+      <input type="text" name="nome" placeholder="Nome do Herói" required>
+      <button type="submit">Adicionar Herói</button>
+    </form>
+  </div>
+{% else %}
+<p>Nenhuma guilda cadastrada.</p>
+{% endfor %}
+{% endblock %}

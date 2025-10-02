@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Dashboard do Player</h2>
+
+<h3>Campanhas disponíveis</h3>
+{% for c in campaigns %}
+<div class="card">
+    <strong>{{ c.nome }}</strong>
+    <br>
+    <a href="/player/campaign/{{ c.id }}">
+        <button>Ver Detalhes</button>
+    </a>
+</div>
+{% else %}
+<p>Nenhuma campanha encontrada.</p>
+{% endfor %}
+{% endblock %}

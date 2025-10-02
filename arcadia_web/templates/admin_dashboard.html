@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<div class="card">
+    <h3>Criar nova campanha</h3>
+    <form method="post" action="/admin/campaign/create">
+        <input type="text" name="nome" placeholder="Nome da Campanha" required>
+        <button type="submit">Criar</button>
+    </form>
+</div>
+
+<h3>Campanhas existentes</h3>
+{% for c in campaigns %}
+<div class="card">
+    <strong>{{ c.nome }}</strong>
+    <br>
+    <a href="/admin/campaign/{{ c.id }}">
+        <button>Ver Detalhes</button>
+    </a>
+</div>
+{% else %}
+<p>Nenhuma campanha criada ainda.</p>
+{% endfor %}
+{% endblock %}

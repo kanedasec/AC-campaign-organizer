@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Linha do Tempo - Campanha {{ campaign.nome }}</h2>
+
+<div class="timeline">
+  {% for m in maps %}
+  <div class="timeline-item">
+    <div class="timeline-marker"></div>
+    <div class="timeline-content card">
+      <h3>{{ m.nome }}</h3>
+      <p><em>Guilda vencedora: {{ m.guilda_vencedora or "Ainda não definida" }}</em></p>
+
+      {% for g in campaign.guilds %}
+        <h4>{{ g.nome }}</h4>
+        <ul>
+          {% for h in g.heroes %}
+            {% set hs = h.maps|selectattr("map_id", "equalto", m.id)|first %}
+            <li>
+              <strong>{{ h.nome }}</strong>
+              — Tokens: {{ hs.death_tokens if hs else 0 }}
+              {% if hs and hs.curse_nome %}
+                — Curse: <span class="curse">{{ hs.curse_nome }}</span>
+                <small>({{ hs.curse_efeito }})</small>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <p>Nenhum mapa registrado ainda.</p>
+  {% endfor %}
+</div>
+
+<style>
+/* Timeline container */
+.timeline {
+  position: relative;
+  margin: 2rem 0;
+  padding-left: 2rem;
+  border-left: 3px solid #ccc;
+}
+
+/* Each item */
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* Circle marker */
+.timeline-marker {
+  position: absolute;
+  left: -11px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  background: #3498db;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px #3498db;
+}
+
+/* Card content */
+.timeline-content {
+  background: #f9f9f9;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Titles */
+.timeline-content h3 {
+  margin-top: 0;
+  color: #2c3e50;
+}
+.timeline-content h4 {
+  margin-bottom: 0.3rem;
+  color: #34495e;
+}
+
+/* Curse highlight */
+.curse {
+  color: #e74c3c;
+  font-weight: bold;
+}
+</style>
+{% endblock %}
