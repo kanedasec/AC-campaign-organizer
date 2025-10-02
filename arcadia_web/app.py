@@ -14,10 +14,6 @@ migrate = Migrate(app, db)
 app.register_blueprint(admin_bp)
 app.register_blueprint(player_bp)
 
-@app.route("/")
-def home():
-    return redirect("/login")
-
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -29,6 +25,22 @@ def login():
             session["role"] = "player"
             return redirect("/player")
     return render_template("login.html")
+
+@app.route("/")
+def index():
+    role = session.get("role")
+    if role == "admin":
+        return redirect("/admin")
+    elif role == "player":
+        return redirect("/player")
+    else:
+        return redirect("/login")
+
+@app.route("/logout")
+def logout():
+    session.clear()  # remove todas as informações da sessão
+    return redirect("/login")  # volta para a tela de login
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000,debug=True)
