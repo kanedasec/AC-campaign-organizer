@@ -10,10 +10,10 @@
       {% for h in g.heroes %}
         {% set hs = h.maps|selectattr("map_id", "equalto", mapa.id)|first %}
         <li>
-          {{ h.nome }}:
+         <h4>{{ h.nome }}:</h4>
           <input type="number" name="hero_{{ h.id }}" value="{{ hs.death_tokens if hs else 0 }}" min="0">
           {% if hs and hs.curse_nome %}
-            → Curse: <strong>{{ hs.curse_nome }}</strong> ({{ hs.curse_efeito }})
+           <h4>→ Curse: <strong>{{ hs.curse_nome }}</strong> ({{ hs.curse_efeito }})<h4/>
           {% endif %}
         </li>
       {% endfor %}
